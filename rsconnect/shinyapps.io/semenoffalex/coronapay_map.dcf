@@ -1,0 +1,13 @@
+name: coronapay_map
+title: coronapay_map
+username:
+account: semenoffalex
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 6196501
+bundleId: 5848878
+url: https://semenoffalex.shinyapps.io/coronapay_map/
+when: 1651187225.98499
+lastSyncTime: 1651187225.98499
+asMultiple: FALSE
+asStatic: FALSE
