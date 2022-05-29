@@ -5,15 +5,16 @@ library(tidyverse)
 kp <- jsonlite::fromJSON("https://api.koronapay.com/agents/?addressTruncateLevel=locality&limit=5000&offset=0&language=ru&locationService=yandex&fields=shortName%2Caddress%2CyandexLocation%2Cschedule%2Cphone%2Cservices%2CrootId&addressObjectId=TR&services=16+or+17",
                          flatten =  TRUE) %>% 
   rename(lat = yandexLocation.latitude,
-         lon = yandexLocation.longitude)
+         lon = yandexLocation.longitude) %>% 
+  mutate(address = tolower(address))
 
 ui <- bootstrapPage(
   # TODO: change to sidebar layout
-  titlePanel("Адреса отделений Coronapay в Турции"),
+  titlePanel("Coronapay offices in Turkey"),
   leaflet::leafletOutput('map', width = '100%', height = '100%'),
   absolutePanel(top = 10, right = 10, id = 'controls',
                 textInput('address', 
-                          "Введите фрагмент адреса (чувствительно к регистру): "),
+                          "Search address (in Russian)"),
                 actionButton("go", "Искать")
                 
   ),
@@ -28,7 +29,7 @@ server <- function(input, output, session) {
   
   filtered <- eventReactive(input$go, {
     kp %>% 
-      filter(grepl(input$address, address))
+      filter(grepl(tolower(input$address), address))
   })
 
   output$map <- leaflet::renderLeaflet({
