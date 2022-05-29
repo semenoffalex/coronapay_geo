@@ -30,7 +30,7 @@ server <- function(input, output, session) {
     kp %>% 
       filter(grepl(input$address, address))
   })
-  # TODO: draw map before button is clicked
+
   output$map <- leaflet::renderLeaflet({
    kp %>% 
       leaflet() %>% 
